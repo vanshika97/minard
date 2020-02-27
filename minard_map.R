@@ -6,8 +6,9 @@ library(lubridate)
 library(ggmap)
 library(gridExtra)
 library(pander)
-
-df <- read.xlsx("C:/Users/vansh/TCD MAI/Data Visualisation/minard/minard-data.xlsx", sheetName = "Sheet1")
+PATH_TO_PROJECT = "./";
+setwd(PATH_TO_PROJECT);
+df <- read.xlsx("minard-data.xlsx", sheetName = "Sheet1")
 cities <- df[names(df) %in% c("LONC", "LATC", "CITY")]
 temperature <- df[names(df) %in% c("LONT", "TEMP", "DAYS", "MON", "DAY")]
 survivors <- df[names(df) %in% c("LONP", "LATP", "SURV", "DIR", "DIV")]
@@ -55,4 +56,4 @@ plot.both <- rbind(ggplotGrob(troops),
 panels <-plot.both$layout$t[grep("panel", plot.both$layout$name)]
 plot.both$heights[panels] <- unit(c(3, 1), "null")
 grid::grid.draw(plot.both)
-
+ggsave("minard.png", plot.both, width=12,height=5.8)
